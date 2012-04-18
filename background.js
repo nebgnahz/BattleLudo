@@ -12,9 +12,121 @@
 
 var c=document.getElementById("myCanvas");
 var ctx=c.getContext("2d");
+
+// define the vector containing the cooodinates of circles
+var points = [{x:150, y:550}, 
+	      {x:250, y:500}, 
+	      {x:350, y:500},
+	      {x:450, y:550},
+	      {x:550, y:450},
+	      {x:500, y:350},
+	      {x:500, y:250},
+	      {x:550, y:150},
+	      {x:650, y:100},
+	      {x:750, y:100},
+	      {x:850, y:100},
+	      {x:950, y:100},
+	      {x:1050, y:100},
+	      {x:1150, y:150},
+	      {x:1200, y:250},
+	      {x:1200, y:350},
+	      {x:1150, y:450},
+	      {x:1250, y:550},
+	      {x:1350, y:500},
+	      {x:1450, y:500},
+	      {x:1550, y:550},
+	      {x:1600, y:650},
+	      {x:1600, y:750},
+	      {x:1600, y:850},
+	      {x:1600, y:950},
+	      {x:1600, y:1050},
+	      {x:1550, y:1150},
+	      {x:1450, y:1200},
+	      {x:1350, y:1200},
+	      {x:1250, y:1150},
+	      {x:1150, y:1250},
+	      {x:1200, y:1350},
+	      {x:1200, y:1450},
+	      {x:1150, y:1550},
+	      {x:1050, y:1600},
+	      {x:950, y:1600},
+	      {x:850, y:1600},
+	      {x:750, y:1600},
+	      {x:650, y:1600},
+	      {x:550, y:1550},
+	      {x:500, y:1450},
+	      {x:500, y:1350},
+	      {x:550, y:1250},
+	      {x:450, y:1150},
+	      {x:350, y:1200},
+	      {x:250, y:1200},
+	      {x:150, y:1150},
+	      {x:100, y:1050},
+	      {x:100, y:950},
+	      {x:100, y:850},
+	      {x:100, y:750},
+	      {x:100, y:650}];
+
+var yellowFinalPoints = [{x:250, y:850}, 
+			 {x:350, y:850}, 
+			 {x:450, y:850}, 
+			 {x:550, y:850}, 
+			 {x:650, y:850}, 
+			 {x:750, y:850}];
+
+var blueFinalPoints = [{x:850, y:250}, 
+		       {x:850, y:350}, 
+		       {x:850, y:450}, 
+		       {x:850, y:550}, 
+		       {x:850, y:650}, 
+		       {x:850, y:750}];
+
+var greenFinalPoints = [{x:1450, y:850}, 
+			 {x:1350, y:850}, 
+			 {x:1250, y:850}, 
+			 {x:1150, y:850}, 
+			 {x:1050, y:850}, 
+			 {x:950, y:850}];
+
+var redFinalPoints = [{x:850, y:1450}, 
+		       {x:850, y:1350}, 
+		       {x:850, y:1250}, 
+		       {x:850, y:1150}, 
+		       {x:850, y:1050}, 
+		       {x:850, y:950}];
+
+var yellowStartPoints = [{x:100, y:100}, 
+			 {x:300, y:100}, 
+			 {x:100, y:300}, 
+			 {x:300, y:300}];
+
+var blueStartPoints = [{x:1400, y:100}, 
+		       {x:1600, y:100}, 
+		       {x:1400, y:300}, 
+		       {x:1600, y:300}];
+
+var greenStartPoints = [{x:1400, y:1400}, 
+			{x:1400, y:1600}, 
+			{x:1600, y:1400}, 
+			{x:1600, y:1600}];
+
+var redStartPoints = [{x:100, y:1400}, 
+		      {x:300, y:1400}, 
+		      {x:100, y:1600}, 
+		      {x:300, y:1600}];
+
+yellowBufferPoint  = {x:50, y:450};
+blueBufferPoint  = {x:1250, y:50};
+greenBufferPoint  = {x:1650, y:1250};
+redBufferPoint  = {x:450, y:1650};
+
+
 ctx.width = 1700;
 ctx.height = 1700;
 // ctx.width, ctx.height
+
+ctx.fillStyle="#FF8FF0";
+ctx.fillRect(0,0,ctx.width, ctx.height);
 
 var scale = 1000;
 var terminal = 400;
@@ -200,49 +312,10 @@ ctx.closePath();
 
 
 
-ctx.fillStyle="#FFFFFF";
-// circles first for each terminal
-ctx.beginPath();
-ctx.arc(100, 100, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(300, 100, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(100, 300, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(300, 300, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
 
-ctx.arc(1400, 100, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1600, 100, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1400, 300, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1600, 300, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
 
-ctx.arc(100, 1400, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(100, 1600, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(300, 1400, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(300, 1600, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-
-ctx.arc(1400, 1400, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1400, 1600, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1600, 1400, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-ctx.arc(1600, 1600, planeRadius, 0, Math.PI*2, true); 
-ctx.closePath();
-
-ctx.fill();
 
 // come to the stroke part
-
 ctx.lineWidth = 3;
 ctx.strokeStyle = 'black';
 ctx.strokeRect(0,0,terminal,terminal);
@@ -417,3 +490,92 @@ ctx.lineTo(1500,900);
 ctx.lineTo(1500,800);
 ctx.stroke();
 ctx.closePath();
+
+
+// draw the white points
+var len = points.length;
+for(var i = 0; i < len; i++) {
+    ctx.fillStyle="#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(points[i].x, points[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    // alert(points[i].x + ' ' + points[i].y);
+    ctx.stroke();
+}
+
+for(var i = 0; i < 6; i++) {
+    ctx.fillStyle="#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(yellowFinalPoints[i].x, yellowFinalPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(blueFinalPoints[i].x, blueFinalPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(greenFinalPoints[i].x, greenFinalPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(redFinalPoints[i].x, redFinalPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+
+for(var i = 0; i < 4; i++) {
+    ctx.fillStyle="#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(yellowStartPoints[i].x, yellowStartPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(blueStartPoints[i].x, blueStartPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(greenStartPoints[i].x, greenStartPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(redStartPoints[i].x, redStartPoints[i].y, planeRadius, 0, Math.PI*2, true); 
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+}
+
+
+ctx.beginPath();
+ctx.arc(yellowBufferPoint.x, yellowBufferPoint.y, planeRadius, 0, Math.PI*2, true); 
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+ctx.beginPath();
+ctx.arc(blueBufferPoint.x, blueBufferPoint.y, planeRadius, 0, Math.PI*2, true); 
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+ctx.beginPath();
+ctx.arc(greenBufferPoint.x, greenBufferPoint.y, planeRadius, 0, Math.PI*2, true); 
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+ctx.beginPath();
+ctx.arc(redBufferPoint.x, redBufferPoint.y, planeRadius, 0, Math.PI*2, true); 
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
