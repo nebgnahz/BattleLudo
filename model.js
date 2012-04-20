@@ -38,31 +38,26 @@ function Node(status, index, locationX, locationY) {
 var images = {};
 var node = new Array();
 initStatus();
+node[12].status = enumStatus.onRoad;
+node[12].index = 0;
+mapNode();
 loadImages();
-console.log(node[3]);
+
+setInterval(function() {
+    mapNode();
+    node[12].index += 1;
+    drawNodes();
+}, 10);
+
 
 // since we are not moving, we are just drawing new
 // so this initStatus is not valid
 // we need to be able to draw the whole in any sec
 function initStatus() {
     for(i=0; i<16; i++) {
-	if(i<4){
-	    node.push(new Node(enumStatus.terminal, undefined, yellowStartPoints[i%4].x, yellowStartPoints[i%4].y));
-	}
-	else if(4<=i && i<8) {
-	    node.push(new Node(enumStatus.terminal, undefined, blueStartPoints[i%4].x, blueStartPoints[i%4].y));
-	}
-	else if(8<=i && i<12) {
-	    node.push(new Node(enumStatus.terminal, undefined, greenStartPoints[i%4].x, greenStartPoints[i%4].y));
-	}
-	else {
-	    node.push(new Node(enumStatus.terminal, undefined, redStartPoints[i%4].x, redStartPoints[i%4].y));
-	}
-
-
+	node.push(new Node(enumStatus.terminal, undefined));
     }
 }
-
 
 function changeStatus(index, status) {
 // should be some animation
@@ -107,14 +102,17 @@ function mapNode(){
 		node[i].locationX = yellowBufferPoint.x;
 		node[i].locationY = yellowBufferPoint.y;		
 	    }
-	    else if (node[i].index >= 49) {
+	    else if (node[i].index > 49) {
+		if (node[i].index > 55)
+		    node[i].index = 55*2 - node[i].index;
+
 		// ending area
-		node[i].locationX = yellowFinalPoints[node[i].index-49].x;
-		node[i].locationY = yellowFinalPoints[node[i].index-49].y;
+		node[i].locationX = yellowFinalPoints[node[i].index-50].x;
+		node[i].locationY = yellowFinalPoints[node[i].index-50].y;
 	    }
 	    else {
-	    	node[i].locationX = points[node[i].index-49].x;
-		node[i].locationY = points[node[i].index-49].y;
+	    	node[i].locationX = points[node[i].index].x;
+		node[i].locationY = points[node[i].index].y;
 	    }
 	}
 	else if (node[i].status === enumStatus.done) {
@@ -127,8 +125,8 @@ function mapNode(){
     }
     for(; i<8; i++) {
 	if (node[i].status === enumStatus.terminal) {
-	    node[i].locationX = blueStartPoints[i].x;
-	    node[i].locationY = blueStartPoints[i].y;
+	    node[i].locationX = blueStartPoints[i%4].x;
+	    node[i].locationY = blueStartPoints[i%4].y;
 	}
 	else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
@@ -136,14 +134,17 @@ function mapNode(){
 		node[i].locationX = blueBufferPoint.x;
 		node[i].locationY = blueBufferPoint.y;		
 	    }
-	    else if (node[i].index >= 49) {
+	    else if (node[i].index > 49) {
+		if (node[i].index > 55)
+		    node[i].index = 55*2 - node[i].index;
+		
 		// ending area
-		node[i].locationX = blueFinalPoints[node[i].index-49].x;
-		node[i].locationY = blueFinalPoints[node[i].index-49].y;
+		node[i].locationX = blueFinalPoints[node[i].index-50].x;
+		node[i].locationY = blueFinalPoints[node[i].index-50].y;
 	    }
 	    else {
-	    	node[i].locationX = points[node[i].index-49].x;
-		node[i].locationY = points[node[i].index-49].y;
+	    	node[i].locationX = points[(node[i].index + 13)%52].x;
+		node[i].locationY = points[(node[i].index + 13)%52].y;
 	    }
 	}
 	else if (node[i].status === enumStatus.done) {
@@ -156,8 +157,8 @@ function mapNode(){
     }
     for(; i<12; i++) {
 	if (node[i].status === enumStatus.terminal) {
-	    node[i].locationX = greenStartPoints[i].x;
-	    node[i].locationY = greenStartPoints[i].y;
+	    node[i].locationX = greenStartPoints[i%4].x;
+	    node[i].locationY = greenStartPoints[i%4].y;
 	}
 	else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
@@ -165,14 +166,17 @@ function mapNode(){
 		node[i].locationX = greenBufferPoint.x;
 		node[i].locationY = greenBufferPoint.y;		
 	    }
-	    else if (node[i].index >= 49) {
+	    else if (node[i].index > 49) {
+		if (node[i].index > 55)
+		    node[i].index = 55*2 - node[i].index;
+
 		// ending area
-		node[i].locationX = greenFinalPoints[node[i].index-49].x;
-		node[i].locationY = greenFinalPoints[node[i].index-49].y;
+		node[i].locationX = greenFinalPoints[node[i].index-50].x;
+		node[i].locationY = greenFinalPoints[node[i].index-50].y;
 	    }
 	    else {
-	    	node[i].locationX = points[node[i].index-49].x;
-		node[i].locationY = points[node[i].index-49].y;
+	    	node[i].locationX = points[(node[i].index + 26)%52].x;
+		node[i].locationY = points[(node[i].index + 26)%52].y;
 	    }
 	}
 	else if (node[i].status === enumStatus.done) {
@@ -185,8 +189,8 @@ function mapNode(){
     }
     for(; i<16; i++) {
 	if (node[i].status === enumStatus.terminal) {
-	    node[i].locationX = redStartPoints[i].x;
-	    node[i].locationY = redStartPoints[i].y;
+	    node[i].locationX = redStartPoints[i%4].x;
+	    node[i].locationY = redStartPoints[i%4].y;
 	}
 	else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
@@ -194,14 +198,16 @@ function mapNode(){
 		node[i].locationX = redBufferPoint.x;
 		node[i].locationY = redBufferPoint.y;		
 	    }
-	    else if (node[i].index >= 49) {
+	    else if (node[i].index >  49) {
+		if (node[i].index > 55)
+		    node[i].index = 55*2 - node[i].index;
 		// ending area
-		node[i].locationX = redFinalPoints[node[i].index-49].x;
-		node[i].locationY = redFinalPoints[node[i].index-49].y;
+		node[i].locationX = redFinalPoints[node[i].index-50].x;
+		node[i].locationY = redFinalPoints[node[i].index-50].y;
 	    }
 	    else {
-	    	node[i].locationX = points[node[i].index-49].x;
-		node[i].locationY = points[node[i].index-49].y;
+	    	node[i].locationX = points[(node[i].index + 39)%52].x;
+		node[i].locationY = points[(node[i].index + 39)%52].y;
 	    }
 	}
 	else if (node[i].status === enumStatus.done) {
@@ -216,15 +222,15 @@ function mapNode(){
 // this will be able to draw nodes at any states?
 function drawNodes() {
     for(i=0; i<4; i++) {
-	ctx.drawImage(images.yellow, node[i].locationX, node[i].locationY);
+	ctx.drawImage(images.yellow, node[i].locationX - 45, node[i].locationY - 45);
     }
     for(; i<8; i++) {
-	ctx.drawImage(images.blue, node[i].locationX, node[i].locationY);
+	ctx.drawImage(images.blue, node[i].locationX - 45, node[i].locationY - 45);
     }
     for(; i<12; i++) {
-	ctx.drawImage(images.green, node[i].locationX, node[i].locationY);
+	ctx.drawImage(images.green, node[i].locationX - 45, node[i].locationY - 45);
     }
     for(; i<16; i++) {
-	ctx.drawImage(images.red, node[i].locationX, node[i].locationY);
+	ctx.drawImage(images.red, node[i].locationX - 45, node[i].locationY - 45);
     }
 }
