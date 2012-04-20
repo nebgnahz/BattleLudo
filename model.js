@@ -44,10 +44,13 @@ mapNode();
 loadImages();
 
 setInterval(function() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    drawBackground();
+    drawWhitePoints();
     mapNode();
     node[12].index += 1;
     drawNodes();
-}, 10);
+}, 100);
 
 
 // since we are not moving, we are just drawing new
