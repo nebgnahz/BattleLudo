@@ -1,4 +1,6 @@
 This is a game using HTML5 and WebSocket(Node.js) for multiplayers.
 Based on the famous Battle Ludo game on Android devices.
 
+The server would be running privately on my personal VPS, resulting only allowing four known people playing.
+
 By Ben(nebgnahz@gmail.com)
