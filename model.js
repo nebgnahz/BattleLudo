@@ -23,17 +23,17 @@
 // class for a node
 // color, index, status(terminal, onRoad, done)
 var enumStatus = {
-    terminal:0,
-    onRoad:1,
-    done:2
+  terminal:0,
+  onRoad:1,
+  done:2
 };
 
 function Node(status, index, locationX, locationY) {
-    this.status = status;
-    this.index = index;
-    this.locationX = locationX;
-    this.locationY = locationY;
-    this.img = undefined;
+  this.status = status;
+  this.index = index;
+  this.locationX = locationX;
+  this.locationY = locationY;
+  this.img = undefined;
 }
 var images = {};
 var node = new Array();
@@ -44,12 +44,12 @@ mapNode();
 loadImages();
 
 setInterval(function() {
-    ctx.clearRect(0, 0, c.width, c.height);
-    drawBackground();
-    drawWhitePoints();
-    mapNode();
-    node[12].index += 1;
-    drawNodes();
+  ctx.clearRect(0, 0, c.width, c.height);
+  drawBackground();
+  drawWhitePoints();
+  mapNode();
+  node[12].index += 1;
+  drawNodes();
 }, 100);
 
 
@@ -57,183 +57,183 @@ setInterval(function() {
 // so this initStatus is not valid
 // we need to be able to draw the whole in any sec
 function initStatus() {
-    for(i=0; i<16; i++) {
-	node.push(new Node(enumStatus.terminal, undefined));
-    }
+  for(i=0; i<16; i++) {
+		node.push(new Node(enumStatus.terminal, undefined));
+  }
 }
 
 function changeStatus(index, status) {
-// should be some animation
-// from terminal to onRoad
-// from onRoad to done
-// from onRoad to terminal
-    node[index].status = status;
+	// should be some animation
+	// from terminal to onRoad
+	// from onRoad to done
+	// from onRoad to terminal
+  node[index].status = status;
 }
 function moveNodes(index, destination) {
-    node[index].location = destination;
+  node[index].location = destination;
 }
 
 function loadImages() {
-    var sources = {
-	yellow: "images/yellow.png",
-	blue: "images/blue.png",
-	green: "images/green.png",
-	red: "images/red.png"
+  var sources = {
+		yellow: "images/yellow.png",
+		blue: "images/blue.png",
+		green: "images/green.png",
+		red: "images/red.png"
+  };
+  var loadedImages = 0;
+  for (var src in sources) {
+    images[src] = new Image();
+    images[src].onload = function(){
+      if (++loadedImages >= 4) {
+				console.log("load images done");
+				drawNodes();
+      }
     };
-    var loadedImages = 0;
-    for (var src in sources) {
-        images[src] = new Image();
-        images[src].onload = function(){
-            if (++loadedImages >= 4) {
-		console.log("load images done");
-		drawNodes();
-            }
-        };
-        images[src].src = sources[src];
-    }
+    images[src].src = sources[src];
+  }
 }
 
 function mapNode(){
-    for(i=0; i<4; i++) {
-	if (node[i].status === enumStatus.terminal) {
+  for(i=0; i<4; i++) {
+		if (node[i].status === enumStatus.terminal) {
 	    node[i].locationX = yellowStartPoints[i].x;
 	    node[i].locationY = yellowStartPoints[i].y;
-	}
-	else if (node[i].status === enumStatus.onRoad) {
+		}
+		else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
-		// buffer area
-		node[i].locationX = yellowBufferPoint.x;
-		node[i].locationY = yellowBufferPoint.y;		
+				// buffer area
+				node[i].locationX = yellowBufferPoint.x;
+				node[i].locationY = yellowBufferPoint.y;		
 	    }
 	    else if (node[i].index > 49) {
-		if (node[i].index > 55)
-		    node[i].index = 55*2 - node[i].index;
+				if (node[i].index > 55)
+					node[i].index = 55*2 - node[i].index;
 
-		// ending area
-		node[i].locationX = yellowFinalPoints[node[i].index-50].x;
-		node[i].locationY = yellowFinalPoints[node[i].index-50].y;
+				// ending area
+				node[i].locationX = yellowFinalPoints[node[i].index-50].x;
+				node[i].locationY = yellowFinalPoints[node[i].index-50].y;
 	    }
 	    else {
 	    	node[i].locationX = points[node[i].index].x;
-		node[i].locationY = points[node[i].index].y;
+				node[i].locationY = points[node[i].index].y;
 	    }
-	}
-	else if (node[i].status === enumStatus.done) {
+		}
+		else if (node[i].status === enumStatus.done) {
 	    node[i].locationX = -100;
 	    node[i].locationY = -100;	    
-	}
-	else {
+		}
+		else {
 	    alert("something got wrong about mapping");
-	}
-    }
-    for(; i<8; i++) {
-	if (node[i].status === enumStatus.terminal) {
+		}
+  }
+  for(; i<8; i++) {
+		if (node[i].status === enumStatus.terminal) {
 	    node[i].locationX = blueStartPoints[i%4].x;
 	    node[i].locationY = blueStartPoints[i%4].y;
-	}
-	else if (node[i].status === enumStatus.onRoad) {
+		}
+		else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
-		// buffer area
-		node[i].locationX = blueBufferPoint.x;
-		node[i].locationY = blueBufferPoint.y;		
+				// buffer area
+				node[i].locationX = blueBufferPoint.x;
+				node[i].locationY = blueBufferPoint.y;		
 	    }
 	    else if (node[i].index > 49) {
-		if (node[i].index > 55)
-		    node[i].index = 55*2 - node[i].index;
-		
-		// ending area
-		node[i].locationX = blueFinalPoints[node[i].index-50].x;
-		node[i].locationY = blueFinalPoints[node[i].index-50].y;
+				if (node[i].index > 55)
+					node[i].index = 55*2 - node[i].index;
+				
+				// ending area
+				node[i].locationX = blueFinalPoints[node[i].index-50].x;
+				node[i].locationY = blueFinalPoints[node[i].index-50].y;
 	    }
 	    else {
 	    	node[i].locationX = points[(node[i].index + 13)%52].x;
-		node[i].locationY = points[(node[i].index + 13)%52].y;
+				node[i].locationY = points[(node[i].index + 13)%52].y;
 	    }
-	}
-	else if (node[i].status === enumStatus.done) {
+		}
+		else if (node[i].status === enumStatus.done) {
 	    node[i].locationX = -100;
 	    node[i].locationY = -100;	    
-	}
-	else {
+		}
+		else {
 	    alert("something got wrong about mapping");
-	}
-    }
-    for(; i<12; i++) {
-	if (node[i].status === enumStatus.terminal) {
+		}
+  }
+  for(; i<12; i++) {
+		if (node[i].status === enumStatus.terminal) {
 	    node[i].locationX = greenStartPoints[i%4].x;
 	    node[i].locationY = greenStartPoints[i%4].y;
-	}
-	else if (node[i].status === enumStatus.onRoad) {
+		}
+		else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
-		// buffer area
-		node[i].locationX = greenBufferPoint.x;
-		node[i].locationY = greenBufferPoint.y;		
+				// buffer area
+				node[i].locationX = greenBufferPoint.x;
+				node[i].locationY = greenBufferPoint.y;		
 	    }
 	    else if (node[i].index > 49) {
-		if (node[i].index > 55)
-		    node[i].index = 55*2 - node[i].index;
+				if (node[i].index > 55)
+					node[i].index = 55*2 - node[i].index;
 
-		// ending area
-		node[i].locationX = greenFinalPoints[node[i].index-50].x;
-		node[i].locationY = greenFinalPoints[node[i].index-50].y;
+				// ending area
+				node[i].locationX = greenFinalPoints[node[i].index-50].x;
+				node[i].locationY = greenFinalPoints[node[i].index-50].y;
 	    }
 	    else {
 	    	node[i].locationX = points[(node[i].index + 26)%52].x;
-		node[i].locationY = points[(node[i].index + 26)%52].y;
+				node[i].locationY = points[(node[i].index + 26)%52].y;
 	    }
-	}
-	else if (node[i].status === enumStatus.done) {
+		}
+		else if (node[i].status === enumStatus.done) {
 	    node[i].locationX = -100;
 	    node[i].locationY = -100;	    
-	}
-	else {
+		}
+		else {
 	    alert("something got wrong about mapping");
-	}
-    }
-    for(; i<16; i++) {
-	if (node[i].status === enumStatus.terminal) {
+		}
+  }
+  for(; i<16; i++) {
+		if (node[i].status === enumStatus.terminal) {
 	    node[i].locationX = redStartPoints[i%4].x;
 	    node[i].locationY = redStartPoints[i%4].y;
-	}
-	else if (node[i].status === enumStatus.onRoad) {
+		}
+		else if (node[i].status === enumStatus.onRoad) {
 	    if (node[i].index == -1) {
-		// buffer area
-		node[i].locationX = redBufferPoint.x;
-		node[i].locationY = redBufferPoint.y;		
+				// buffer area
+				node[i].locationX = redBufferPoint.x;
+				node[i].locationY = redBufferPoint.y;		
 	    }
 	    else if (node[i].index >  49) {
-		if (node[i].index > 55)
-		    node[i].index = 55*2 - node[i].index;
-		// ending area
-		node[i].locationX = redFinalPoints[node[i].index-50].x;
-		node[i].locationY = redFinalPoints[node[i].index-50].y;
+				if (node[i].index > 55)
+					node[i].index = 55*2 - node[i].index;
+				// ending area
+				node[i].locationX = redFinalPoints[node[i].index-50].x;
+				node[i].locationY = redFinalPoints[node[i].index-50].y;
 	    }
 	    else {
 	    	node[i].locationX = points[(node[i].index + 39)%52].x;
-		node[i].locationY = points[(node[i].index + 39)%52].y;
+				node[i].locationY = points[(node[i].index + 39)%52].y;
 	    }
-	}
-	else if (node[i].status === enumStatus.done) {
+		}
+		else if (node[i].status === enumStatus.done) {
 	    node[i].locationX = -100;
 	    node[i].locationY = -100;	    
-	}
-	else {
+		}
+		else {
 	    alert("something got wrong about mapping");
-	}
-    }
+		}
+  }
 }
 // this will be able to draw nodes at any states?
 function drawNodes() {
-    for(i=0; i<4; i++) {
-	ctx.drawImage(images.yellow, node[i].locationX - 45, node[i].locationY - 45);
-    }
-    for(; i<8; i++) {
-	ctx.drawImage(images.blue, node[i].locationX - 45, node[i].locationY - 45);
-    }
-    for(; i<12; i++) {
-	ctx.drawImage(images.green, node[i].locationX - 45, node[i].locationY - 45);
-    }
-    for(; i<16; i++) {
-	ctx.drawImage(images.red, node[i].locationX - 45, node[i].locationY - 45);
-    }
+  for(i=0; i<4; i++) {
+		ctx.drawImage(images.yellow, node[i].locationX - 45, node[i].locationY - 45);
+  }
+  for(; i<8; i++) {
+		ctx.drawImage(images.blue, node[i].locationX - 45, node[i].locationY - 45);
+  }
+  for(; i<12; i++) {
+		ctx.drawImage(images.green, node[i].locationX - 45, node[i].locationY - 45);
+  }
+  for(; i<16; i++) {
+		ctx.drawImage(images.red, node[i].locationX - 45, node[i].locationY - 45);
+  }
 }
